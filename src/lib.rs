@@ -1,13 +1,13 @@
 use pyo3::prelude;
 
 #[prelude::pyclass]
-pub struct Trie {
-    children: std::collections::HashMap<char, Trie>,
+pub struct CharTrie {
+    children: std::collections::HashMap<char, CharTrie>,
     is_end_of_word: bool,
 }
 
 #[prelude::pymethods]
-impl Trie {
+impl CharTrie {
     #[new]
     pub fn new() -> Self {
         Self {
@@ -19,7 +19,7 @@ impl Trie {
     pub fn insert(&mut self, word: &str) {
         let mut node = self;
         for ch in word.chars() {
-            node = node.children.entry(ch).or_insert(Trie::new());
+            node = node.children.entry(ch).or_insert(CharTrie::new());
         }
         node.is_end_of_word = true;
     }
@@ -33,7 +33,7 @@ impl Trie {
                 return false;
             }
         }
-        node.is_end_of_word
+        return node.is_end_of_word;
     }
 
     pub fn next_allowed_tokens(&self, prefix: &str) -> Vec<char> {
@@ -45,12 +45,12 @@ impl Trie {
                 return vec![]; // No tokens found for the given prefix
             }
         }
-        node.children.keys().cloned().collect()
+        return node.children.keys().cloned().collect();
     }
 }
 
 #[prelude::pymodule]
 fn triehard(_py: prelude::Python, m: &prelude::PyModule) -> prelude::PyResult<()> {
-    m.add_class::<Trie>()?;
+    m.add_class::<CharTrie>()?;
     Ok(())
 }
