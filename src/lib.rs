@@ -35,10 +35,22 @@ impl Trie {
         }
         node.is_end_of_word
     }
+
+    pub fn next_allowed_tokens(&self, prefix: &str) -> Vec<char> {
+        let mut node = self;
+        for ch in prefix.chars() {
+            if let Some(next_node) = node.children.get(&ch) {
+                node = next_node;
+            } else {
+                return vec![]; // No tokens found for the given prefix
+            }
+        }
+        node.children.keys().cloned().collect()
+    }
 }
 
 #[prelude::pymodule]
-fn triehard(_py: Python, m: &PyModule) -> PyResult<()> {
+fn triehard(_py: prelude::Python, m: &prelude::PyModule) -> prelude::PyResult<()> {
     m.add_class::<Trie>()?;
     Ok(())
 }
