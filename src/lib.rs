@@ -50,7 +50,7 @@ impl CharTrie {
 }
 
 #[prelude::pymodule]
-fn triehard(_py: prelude::Python, m: &prelude::PyModule) -> prelude::PyResult<()> {
+fn tokentamer(_py: prelude::Python, m: &prelude::PyModule) -> prelude::PyResult<()> {
     m.add_class::<CharTrie>()?;
     Ok(())
 }

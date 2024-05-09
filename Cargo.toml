@@ -1,11 +1,11 @@
 [package]
-name = "triehard"
-version = "0.1.0"
+name = "tokentamer"
+version = "0.0.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
-name = "triehard"
+name = "tokentamer"
 crate-type = ["cdylib"]
 
 [dependencies]
